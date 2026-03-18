@@ -1035,10 +1035,53 @@
         // ============================================
         // HELPERS
         // ============================================
+        const imageNameMap = {
+            // MUJER
+            'COCO MADEMOISELLE|MADEIMOISELLE': 'MADEIMOISELLE_CHANEL-removebg-preview.png',
+            'SCANDAL|JEAN PAUL GAULTIER': 'SACANDAL_JEAN_PAUL_GAULTIER-removebg-preview.png',
+            '212 VIP ROSÉ|CAROLINA HERRERA': '212_VIP_ROSÉ_CAROLINA_HERRERA-removebg-preview.png',
+            'L\'EAU D\'ISSEY|ISSEY MIYAKE': 'ISSEY_MIYAKE_L_EAU_D_ISSEY-removebg-preview.png',
+            'YELLOW DIAMOND|VERSACE': 'YELLOW_DIAMOND_VERSAGE-removebg-preview.png',
+            'BRIGHT CRYSTAL|VERSACE': 'BRIGHT_CRYSTAL_VERSAGE-removebg-preview.png',
+            'LIGHT BLUE|DOLCE & GABBANA': 'LIGHT_BLUE_DOLCE_GABBANA-removebg-preview.png',
+            'PURE XS|PACO RABANNE': 'PURE_XS__PACO_RABANNE-removebg-preview.png',
+            '360°|PERRY ELLIS': '360__PERRY_ELLIS-removebg-preview.png',
+            'LA VIE EST BELLE|LANCOME': 'LA_VIE_EST_BELLE_LANCOME-removebg-preview.png',
+            'OMNIA CORAL|BVLGARI': 'OMNIA_CORAL_BVLGARI-removebg-preview.png',
+            'OMNIA AMETHYSTE|BVLGARI': 'OMNIA_AMETHYSTE_BVLGARI-removebg-preview.png',
+            'OMNIA CRYSTALLINE|BVLGARI': 'OMNIA_CRYSTALLINE_BVLGARI-removebg-preview.png',
+            // HOMBRE
+            'EROS FLAME|VERSACE': 'EROS_FLAME_VERSCE-removebg-preview.png',
+            'SILVER MOUNTAIN WATER|CREED': 'SILVER_MPUNTAIN_WATER_CREED-removebg-preview.png',
+            'LEGEND SPIRIT|MONTBLANC': 'LENGEND_SPIRIT_MONTBLANC-removebg-preview.png',
+            'HAPPY FOR MEN|CLINIQUE': 'FOR_MEN_CLINIQUE_HAPPY-removebg-preview.png',
+            'L\'EAU D\'ISSEY|ISSEY MIYAKE': 'ISSEY_MIYAKE_LEAU_DISSEY-removebg-preview.png',
+            'LIGHT BLUE|DOLCE & GABBANA': 'LIGHT_BLUE_DOLCE___GABANNA-removebg-preview.png',
+            'NOIR|LACOSTE': 'NOIR_LACOSTE-removebg-preview-removebg-preview.png',
+            'ONLY THE BRAVE TATTOO|DIESEL': 'ONLY_THE_BRAVE_TATTO_DIESEL-removebg-preview.png',
+        };
+
         function getPerfumeImage(name, brand, gender) {
             const folder = gender === 'mujer' ? 'mujer' : 'hombre';
-            const nameFormatted = name.toUpperCase().replace(/\s+/g, '_').replace(/[^A-Z0-9_]/g, '');
-            const brandFormatted = brand.toUpperCase().replace(/\s+/g, '_').replace(/[^A-Z0-9_]/g, '');
+            
+            // Check for special mappings first
+            for (const [key, value] of Object.entries(imageNameMap)) {
+                const names = key.split('|');
+                if (names.some(n => name.includes(n)) && brand.includes(names[1])) {
+                    return `images/${folder}/${value}`;
+                }
+            }
+            
+            // Default: generate from name and brand
+            const nameFormatted = name.toUpperCase()
+                .replace(/'/g, '')
+                .replace(/°/g, '')
+                .replace(/\s+/g, '_')
+                .replace(/[^A-Z0-9_]/g, '');
+            const brandFormatted = brand.toUpperCase()
+                .replace(/&/g, '')
+                .replace(/\s+/g, '_')
+                .replace(/[^A-Z0-9_]/g, '');
             return `images/${folder}/${nameFormatted}_${brandFormatted}-removebg-preview.png`;
         }
 
