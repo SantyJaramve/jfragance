@@ -257,6 +257,49 @@
             color: var(--color-text-muted);
         }
 
+        .price-banner {
+            position: absolute;
+            left: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+            text-align: left;
+            z-index: 15;
+        }
+
+        .price-banner-line {
+            width: 40px;
+            height: 1px;
+            background: var(--color-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .price-banner-text {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--color-text-muted);
+            margin-bottom: 0.3rem;
+        }
+
+        .price-banner-amount {
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            font-weight: 400;
+            color: var(--color-primary);
+            letter-spacing: 0.02em;
+        }
+
+        .price-banner-currency {
+            font-family: var(--font-body);
+            font-size: 0.6rem;
+            font-weight: 300;
+            color: var(--color-text-muted);
+            margin-left: 0.3rem;
+            letter-spacing: 0.1em;
+        }
+
         .carousel-wrapper {
             position: relative;
             width: 100%;
@@ -426,13 +469,6 @@
             font-weight: 400;
             margin-bottom: 0.4rem;
             color: var(--color-text);
-        }
-
-        .card-price {
-            font-family: var(--font-display);
-            font-size: 1.3rem;
-            color: var(--color-text-muted);
-            margin-top: 0.5rem;
         }
 
         /* ============================================
@@ -656,12 +692,6 @@
             margin-bottom: 0.3rem;
         }
 
-        .gallery-price {
-            font-family: var(--font-display);
-            font-size: 1rem;
-            color: var(--color-text-muted);
-        }
-
         /* ============================================
            FOOTER
            ============================================ */
@@ -779,16 +809,8 @@
             font-size: 2rem;
             font-weight: 400;
             text-align: center;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
             color: var(--color-text);
-        }
-
-        .modal-price {
-            font-family: var(--font-display);
-            font-size: 1.5rem;
-            text-align: center;
-            color: var(--color-text-muted);
-            margin-bottom: 2rem;
         }
 
         .modal-btn {
@@ -913,6 +935,23 @@
             .scroll-hint {
                 right: 1.5rem;
             }
+
+            .price-banner {
+                position: absolute;
+                left: 50%;
+                top: 12%;
+                transform: translateX(-50%);
+                text-align: center;
+                z-index: 15;
+            }
+
+            .price-banner-line {
+                margin: 0 auto 0.75rem;
+            }
+
+            .price-banner-amount {
+                font-size: 1.3rem;
+            }
         }
 
         @media (max-width: 480px) {
@@ -969,6 +1008,12 @@
             <h1>J FRAGANCE</h1>
         </div>
 
+        <div class="price-banner">
+            <div class="price-banner-line"></div>
+            <p class="price-banner-text">Cualquier loción</p>
+            <p class="price-banner-amount">$115.000<span class="price-banner-currency">COP</span></p>
+        </div>
+
         <div class="carousel-wrapper">
             <div class="carousel" id="carousel"></div>
         </div>
@@ -1018,7 +1063,6 @@
             </div>
             <p class="modal-brand" id="modalBrand"></p>
             <h2 class="modal-name" id="modalName"></h2>
-            <p class="modal-price" id="modalPrice"></p>
             <a href="#" class="modal-btn whatsapp" id="modalWhatsapp" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Comprar por WhatsApp
@@ -1114,117 +1158,117 @@
         // DATA
         // ============================================
         const carouselPerfumes = [
-            { brand: "CHANEL", name: "BLEU DE CHANEL", price: "$165", gradient: "linear-gradient(135deg, #0a1525 0%, #1a2a3a 50%, #0d1a2a 100%)" },
-            { brand: "PACO RABANNE", name: "1 MILLION", price: "$130", gradient: "linear-gradient(135deg, #1a0a0a 0%, #2a1a1a 50%, #1a0a0a 100%)" },
-            { brand: "DIOR", name: "SAUVAGE", price: "$150", gradient: "linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a1520 100%)" },
-            { brand: "CREED", name: "AVENTUS", price: "$280", gradient: "linear-gradient(135deg, #1a1a0a 0%, #2a2a1a 50%, #1a1a0a 100%)" },
-            { brand: "VERSACE", name: "EROS", price: "$120", gradient: "linear-gradient(135deg, #0a2a1a 0%, #1a3a2a 50%, #0a2a1a 100%)" }
+            { brand: "CHANEL", name: "BLEU DE CHANEL", gradient: "linear-gradient(135deg, #0a1525 0%, #1a2a3a 50%, #0d1a2a 100%)" },
+            { brand: "PACO RABANNE", name: "1 MILLION", gradient: "linear-gradient(135deg, #1a0a0a 0%, #2a1a1a 50%, #1a0a0a 100%)" },
+            { brand: "DIOR", name: "SAUVAGE", gradient: "linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a1520 100%)" },
+            { brand: "CREED", name: "AVENTUS", gradient: "linear-gradient(135deg, #1a1a0a 0%, #2a2a1a 50%, #1a1a0a 100%)" },
+            { brand: "VERSACE", name: "EROS", gradient: "linear-gradient(135deg, #0a2a1a 0%, #1a3a2a 50%, #0a2a1a 100%)" }
         ];
 
         const allPerfumes = [
             // MUJER
-            { brand: "CAROLINA HERRERA", name: "212 NYC", price: "$135", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "212 VIP", price: "$140", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "212 VIP ROSÉ", price: "$145", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "212 SEXY", price: "$130", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "CH CH", price: "$125", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "GOOD GIRL", price: "$150", gender: "mujer" },
-            { brand: "CAROLINA HERRERA", name: "212 HEROES", price: "$135", gender: "mujer" },
-            { brand: "TOMMY HILFIGER", name: "TOMMY GIRL", price: "$85", gender: "mujer" },
-            { brand: "BRITNEY SPEARS", name: "FANTASY", price: "$55", gender: "mujer" },
-            { brand: "PARIS HILTON", name: "CAN CAN", price: "$60", gender: "mujer" },
-            { brand: "PARIS HILTON", name: "PARIS HILTON", price: "$65", gender: "mujer" },
-            { brand: "DIOR", name: "JADORE", price: "$165", gender: "mujer" },
-            { brand: "PACO RABANNE", name: "OLYMPEA", price: "$120", gender: "mujer" },
-            { brand: "PACO RABANNE", name: "LADY MILLION", price: "$115", gender: "mujer" },
-            { brand: "PACO RABANNE", name: "FAME", price: "$110", gender: "mujer" },
-            { brand: "ORIENTICA", name: "AMBER ROUGE", price: "$75", gender: "mujer" },
-            { brand: "CHANEL", name: "COCO MADEMOISELLE", price: "$175", gender: "mujer" },
-            { brand: "HUGO BOSS", name: "THE SCENT", price: "$95", gender: "mujer" },
-            { brand: "VERSACE", name: "YELLOW DIAMOND", price: "$105", gender: "mujer" },
-            { brand: "VERSACE", name: "BRIGHT CRYSTAL", price: "$100", gender: "mujer" },
-            { brand: "RALPH LAUREN", name: "RALPH", price: "$90", gender: "mujer" },
-            { brand: "BVLGARI", name: "OMNIA CORAL", price: "$110", gender: "mujer" },
-            { brand: "BVLGARI", name: "OMNIA AMETHYSTE", price: "$115", gender: "mujer" },
-            { brand: "BVLGARI", name: "OMNIA CRYSTALLINE", price: "$105", gender: "mujer" },
-            { brand: "JEAN PAUL GAULTIER", name: "SCANDAL", price: "$130", gender: "mujer" },
-            { brand: "MOSCHINO", name: "TOY 2 BUBBLE GUM", price: "$70", gender: "mujer" },
-            { brand: "MOSCHINO", name: "TOY 2", price: "$75", gender: "mujer" },
-            { brand: "LANCOME", name: "LA VIE EST BELLE", price: "$125", gender: "mujer" },
-            { brand: "LACOSTE", name: "SPARKLING", price: "$80", gender: "mujer" },
-            { brand: "LACOSTE", name: "TOUCH OF PINK", price: "$75", gender: "mujer" },
-            { brand: "KENZO", name: "FLOWER", price: "$95", gender: "mujer" },
-            { brand: "ISSEY MIYAKE", name: "L'EAU D'ISSEY", price: "$100", gender: "mujer" },
-            { brand: "PERRY ELLIS", name: "360°", price: "$65", gender: "mujer" },
-            { brand: "LATTAFA", name: "YARA", price: "$55", gender: "mujer" },
-            { brand: "LATTAFA", name: "YARA MOI", price: "$60", gender: "mujer" },
-            { brand: "LATTAFA", name: "YARA PINK", price: "$55", gender: "mujer" },
-            { brand: "DOLCE & GABBANA", name: "LIGHT BLUE", price: "$120", gender: "mujer" },
-            { brand: "PARFUMS DE MARLY", name: "DELINA EXCLUSIF", price: "$195", gender: "mujer" },
-            { brand: "PACO RABANNE", name: "PURE XS", price: "$115", gender: "mujer" },
-            { brand: "ARIANA GRANDE", name: "SWEET LIKE CANDY", price: "$65", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "212 NYC", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "212 VIP", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "212 VIP ROSÉ", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "212 SEXY", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "CH CH", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "GOOD GIRL", gender: "mujer" },
+            { brand: "CAROLINA HERRERA", name: "212 HEROES", gender: "mujer" },
+            { brand: "TOMMY HILFIGER", name: "TOMMY GIRL", gender: "mujer" },
+            { brand: "BRITNEY SPEARS", name: "FANTASY", gender: "mujer" },
+            { brand: "PARIS HILTON", name: "CAN CAN", gender: "mujer" },
+            { brand: "PARIS HILTON", name: "PARIS HILTON", gender: "mujer" },
+            { brand: "DIOR", name: "JADORE", gender: "mujer" },
+            { brand: "PACO RABANNE", name: "OLYMPEA", gender: "mujer" },
+            { brand: "PACO RABANNE", name: "LADY MILLION", gender: "mujer" },
+            { brand: "PACO RABANNE", name: "FAME", gender: "mujer" },
+            { brand: "ORIENTICA", name: "AMBER ROUGE", gender: "mujer" },
+            { brand: "CHANEL", name: "COCO MADEMOISELLE", gender: "mujer" },
+            { brand: "HUGO BOSS", name: "THE SCENT", gender: "mujer" },
+            { brand: "VERSACE", name: "YELLOW DIAMOND", gender: "mujer" },
+            { brand: "VERSACE", name: "BRIGHT CRYSTAL", gender: "mujer" },
+            { brand: "RALPH LAUREN", name: "RALPH", gender: "mujer" },
+            { brand: "BVLGARI", name: "OMNIA CORAL", gender: "mujer" },
+            { brand: "BVLGARI", name: "OMNIA AMETHYSTE", gender: "mujer" },
+            { brand: "BVLGARI", name: "OMNIA CRYSTALLINE", gender: "mujer" },
+            { brand: "JEAN PAUL GAULTIER", name: "SCANDAL", gender: "mujer" },
+            { brand: "MOSCHINO", name: "TOY 2 BUBBLE GUM", gender: "mujer" },
+            { brand: "MOSCHINO", name: "TOY 2", gender: "mujer" },
+            { brand: "LANCOME", name: "LA VIE EST BELLE", gender: "mujer" },
+            { brand: "LACOSTE", name: "SPARKLING", gender: "mujer" },
+            { brand: "LACOSTE", name: "TOUCH OF PINK", gender: "mujer" },
+            { brand: "KENZO", name: "FLOWER", gender: "mujer" },
+            { brand: "ISSEY MIYAKE", name: "L'EAU D'ISSEY", gender: "mujer" },
+            { brand: "PERRY ELLIS", name: "360°", gender: "mujer" },
+            { brand: "LATTAFA", name: "YARA", gender: "mujer" },
+            { brand: "LATTAFA", name: "YARA MOI", gender: "mujer" },
+            { brand: "LATTAFA", name: "YARA PINK", gender: "mujer" },
+            { brand: "DOLCE & GABBANA", name: "LIGHT BLUE", gender: "mujer" },
+            { brand: "PARFUMS DE MARLY", name: "DELINA EXCLUSIF", gender: "mujer" },
+            { brand: "PACO RABANNE", name: "PURE XS", gender: "mujer" },
+            { brand: "ARIANA GRANDE", name: "SWEET LIKE CANDY", gender: "mujer" },
             // HOMBRE
-            { brand: "CHANEL", name: "ALLURE", price: "$145", gender: "hombre" },
-            { brand: "CHANEL", name: "BLEU DE CHANEL", price: "$155", gender: "hombre" },
-            { brand: "MOSCHINO", name: "TOY BOY 2", price: "$95", gender: "hombre" },
-            { brand: "PERRY ELLIS", name: "360°", price: "$70", gender: "hombre" },
-            { brand: "GIORGIO ARMANI", name: "ACQUA DI GIO", price: "$140", gender: "hombre" },
-            { brand: "GIORGIO ARMANI", name: "PROFUMO", price: "$150", gender: "hombre" },
-            { brand: "CAROLINA HERRERA", name: "BAD BOY", price: "$130", gender: "hombre" },
-            { brand: "CAROLINA HERRERA", name: "212 NYC", price: "$125", gender: "hombre" },
-            { brand: "CAROLINA HERRERA", name: "212 VIP WILD PARTY", price: "$135", gender: "hombre" },
-            { brand: "CAROLINA HERRERA", name: "212 VIP", price: "$130", gender: "hombre" },
-            { brand: "CAROLINA HERRERA", name: "212 HEROES", price: "$125", gender: "hombre" },
-            { brand: "TOMMY HILFIGER", name: "TOMMY", price: "$85", gender: "hombre" },
-            { brand: "LACOSTE", name: "ROUGE", price: "$80", gender: "hombre" },
-            { brand: "LACOSTE", name: "BLEU", price: "$75", gender: "hombre" },
-            { brand: "LACOSTE", name: "PURE", price: "$70", gender: "hombre" },
-            { brand: "LACOSTE", name: "NOIR", price: "$75", gender: "hombre" },
-            { brand: "LACOSTE", name: "VERT", price: "$72", gender: "hombre" },
-            { brand: "LACOSTE", name: "RED", price: "$70", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "BLACK XS L'APHRODISIAQUE", price: "$130", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "BLACK XS", price: "$115", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "INVICTUS LEGEND", price: "$140", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "INVICTUS", price: "$95", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "INVICTUS INTENSE", price: "$120", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "PURE XS", price: "$110", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "1 MILLION LUCKY", price: "$125", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "1 MILLION", price: "$120", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "1 MILLION PRIVÉ", price: "$145", gender: "hombre" },
-            { brand: "PACO RABANNE", name: "PHANTOM", price: "$115", gender: "hombre" },
-            { brand: "DIOR", name: "SAUVAGE", price: "$150", gender: "hombre" },
-            { brand: "DIOR", name: "FAHRENHEIT", price: "$135", gender: "hombre" },
-            { brand: "HUGO BOSS", name: "BOTTLED", price: "$90", gender: "hombre" },
-            { brand: "HUGO BOSS", name: "UNLIMITED", price: "$95", gender: "hombre" },
-            { brand: "HUGO BOSS", name: "HUGO MAN", price: "$80", gender: "hombre" },
-            { brand: "HUGO BOSS", name: "HUGO RED", price: "$85", gender: "hombre" },
-            { brand: "HUGO BOSS", name: "THE SCENT", price: "$90", gender: "hombre" },
-            { brand: "PARIS HILTON", name: "FOR MEN", price: "$65", gender: "hombre" },
-            { brand: "MONTBLANC", name: "LEGEND", price: "$110", gender: "hombre" },
-            { brand: "MONTBLANC", name: "LEGEND SPIRIT", price: "$115", gender: "hombre" },
-            { brand: "MONTBLANC", name: "EMBLEM", price: "$100", gender: "hombre" },
-            { brand: "MONTBLANC", name: "STARWALKER", price: "$105", gender: "hombre" },
-            { brand: "VICTORINOX", name: "SWISS ARMY CLASSIC", price: "$75", gender: "hombre" },
-            { brand: "NAUTICA", name: "VOYAGE", price: "$60", gender: "hombre" },
-            { brand: "DOLCE & GABBANA", name: "THE ONE", price: "$120", gender: "hombre" },
-            { brand: "DOLCE & GABBANA", name: "LIGHT BLUE", price: "$115", gender: "hombre" },
-            { brand: "JEAN PAUL GAULTIER", name: "SCANDAL", price: "$125", gender: "hombre" },
-            { brand: "JEAN PAUL GAULTIER", name: "LE MALE", price: "$115", gender: "hombre" },
-            { brand: "TED LAPIDUS", name: "LAPIDUS", price: "$85", gender: "hombre" },
-            { brand: "CLINIQUE", name: "HAPPY FOR MEN", price: "$70", gender: "hombre" },
-            { brand: "ISSEY MIYAKE", name: "L'EAU D'ISSEY", price: "$95", gender: "hombre" },
-            { brand: "RALPH LAUREN", name: "POLO BLUE", price: "$100", gender: "hombre" },
-            { brand: "RALPH LAUREN", name: "POLO RED", price: "$95", gender: "hombre" },
-            { brand: "CALVIN KLEIN", name: "CK ONE", price: "$55", gender: "hombre" },
-            { brand: "DIESEL", name: "ONLY THE BRAVE", price: "$85", gender: "hombre" },
-            { brand: "DIESEL", name: "ONLY THE BRAVE TATTOO", price: "$90", gender: "hombre" },
-            { brand: "VERSACE", name: "EAU FRAICHE", price: "$95", gender: "hombre" },
-            { brand: "VERSACE", name: "EROS", price: "$120", gender: "hombre" },
-            { brand: "VERSACE", name: "EROS FLAME", price: "$125", gender: "hombre" },
-            { brand: "CREED", name: "AVENTUS", price: "$280", gender: "hombre" },
-            { brand: "CREED", name: "SILVER MOUNTAIN WATER", price: "$260", gender: "hombre" },
-            { brand: "LATTAFA", name: "YARA ASAD", price: "$50", gender: "hombre" },
-            { brand: "GILLES CANTUEL", name: "ARSENAL", price: "$70", gender: "hombre" }
+            { brand: "CHANEL", name: "ALLURE", gender: "hombre" },
+            { brand: "CHANEL", name: "BLEU DE CHANEL", gender: "hombre" },
+            { brand: "MOSCHINO", name: "TOY BOY 2", gender: "hombre" },
+            { brand: "PERRY ELLIS", name: "360°", gender: "hombre" },
+            { brand: "GIORGIO ARMANI", name: "ACQUA DI GIO", gender: "hombre" },
+            { brand: "GIORGIO ARMANI", name: "PROFUMO", gender: "hombre" },
+            { brand: "CAROLINA HERRERA", name: "BAD BOY", gender: "hombre" },
+            { brand: "CAROLINA HERRERA", name: "212 NYC", gender: "hombre" },
+            { brand: "CAROLINA HERRERA", name: "212 VIP WILD PARTY", gender: "hombre" },
+            { brand: "CAROLINA HERRERA", name: "212 VIP", gender: "hombre" },
+            { brand: "CAROLINA HERRERA", name: "212 HEROES", gender: "hombre" },
+            { brand: "TOMMY HILFIGER", name: "TOMMY", gender: "hombre" },
+            { brand: "LACOSTE", name: "ROUGE", gender: "hombre" },
+            { brand: "LACOSTE", name: "BLEU", gender: "hombre" },
+            { brand: "LACOSTE", name: "PURE", gender: "hombre" },
+            { brand: "LACOSTE", name: "NOIR", gender: "hombre" },
+            { brand: "LACOSTE", name: "VERT", gender: "hombre" },
+            { brand: "LACOSTE", name: "RED", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "BLACK XS L'APHRODISIAQUE", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "BLACK XS", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "INVICTUS LEGEND", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "INVICTUS", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "INVICTUS INTENSE", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "PURE XS", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "1 MILLION LUCKY", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "1 MILLION", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "1 MILLION PRIVÉ", gender: "hombre" },
+            { brand: "PACO RABANNE", name: "PHANTOM", gender: "hombre" },
+            { brand: "DIOR", name: "SAUVAGE", gender: "hombre" },
+            { brand: "DIOR", name: "FAHRENHEIT", gender: "hombre" },
+            { brand: "HUGO BOSS", name: "BOTTLED", gender: "hombre" },
+            { brand: "HUGO BOSS", name: "UNLIMITED", gender: "hombre" },
+            { brand: "HUGO BOSS", name: "HUGO MAN", gender: "hombre" },
+            { brand: "HUGO BOSS", name: "HUGO RED", gender: "hombre" },
+            { brand: "HUGO BOSS", name: "THE SCENT", gender: "hombre" },
+            { brand: "PARIS HILTON", name: "FOR MEN", gender: "hombre" },
+            { brand: "MONTBLANC", name: "LEGEND", gender: "hombre" },
+            { brand: "MONTBLANC", name: "LEGEND SPIRIT", gender: "hombre" },
+            { brand: "MONTBLANC", name: "EMBLEM", gender: "hombre" },
+            { brand: "MONTBLANC", name: "STARWALKER", gender: "hombre" },
+            { brand: "VICTORINOX", name: "SWISS ARMY CLASSIC", gender: "hombre" },
+            { brand: "NAUTICA", name: "VOYAGE", gender: "hombre" },
+            { brand: "DOLCE & GABBANA", name: "THE ONE", gender: "hombre" },
+            { brand: "DOLCE & GABBANA", name: "LIGHT BLUE", gender: "hombre" },
+            { brand: "JEAN PAUL GAULTIER", name: "SCANDAL", gender: "hombre" },
+            { brand: "JEAN PAUL GAULTIER", name: "LE MALE", gender: "hombre" },
+            { brand: "TED LAPIDUS", name: "LAPIDUS", gender: "hombre" },
+            { brand: "CLINIQUE", name: "HAPPY FOR MEN", gender: "hombre" },
+            { brand: "ISSEY MIYAKE", name: "L'EAU D'ISSEY", gender: "hombre" },
+            { brand: "RALPH LAUREN", name: "POLO BLUE", gender: "hombre" },
+            { brand: "RALPH LAUREN", name: "POLO RED", gender: "hombre" },
+            { brand: "CALVIN KLEIN", name: "CK ONE", gender: "hombre" },
+            { brand: "DIESEL", name: "ONLY THE BRAVE", gender: "hombre" },
+            { brand: "DIESEL", name: "ONLY THE BRAVE TATTOO", gender: "hombre" },
+            { brand: "VERSACE", name: "EAU FRAICHE", gender: "hombre" },
+            { brand: "VERSACE", name: "EROS", gender: "hombre" },
+            { brand: "VERSACE", name: "EROS FLAME", gender: "hombre" },
+            { brand: "CREED", name: "AVENTUS", gender: "hombre" },
+            { brand: "CREED", name: "SILVER MOUNTAIN WATER", gender: "hombre" },
+            { brand: "LATTAFA", name: "YARA ASAD", gender: "hombre" },
+            { brand: "GILLES CANTUEL", name: "ARSENAL", gender: "hombre" }
         ];
 
         // ============================================
@@ -1291,7 +1335,6 @@
                     <div class="card-content">
                         <p class="card-brand">${perfume.brand}</p>
                         <h3 class="card-name">${perfume.name}</h3>
-                        <p class="card-price">${perfume.price}</p>
                     </div>
                 </div>
             `;
@@ -1380,7 +1423,6 @@
                     <div style="display:none;">${svgFallback}</div>
                     <p class="gallery-brand">${perfume.brand}</p>
                     <h3 class="gallery-name">${perfume.name}</h3>
-                    <p class="gallery-price">${perfume.price}</p>
                 `;
 
                 item.addEventListener('click', () => openModal(perfume));
@@ -1400,7 +1442,6 @@
         const modalImage = document.getElementById('modalImage');
         const modalBrand = document.getElementById('modalBrand');
         const modalName = document.getElementById('modalName');
-        const modalPrice = document.getElementById('modalPrice');
         const modalWhatsapp = document.getElementById('modalWhatsapp');
         const modalClose = document.getElementById('modalClose');
 
@@ -1410,9 +1451,8 @@
             modalImage.alt = perfume.name;
             modalBrand.textContent = perfume.brand;
             modalName.textContent = perfume.name;
-            modalPrice.textContent = perfume.price;
             
-            const message = encodeURIComponent(`Hola! Me interesa el perfume ${perfume.name} - ${perfume.brand} (${perfume.price})`);
+            const message = encodeURIComponent(`Hola! Me interesa el perfume ${perfume.name} - ${perfume.brand}`);
             modalWhatsapp.href = `https://api.whatsapp.com/send?phone=573194284340&text=${message}`;
             
             modalOverlay.classList.add('active');
