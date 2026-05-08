@@ -5,996 +5,420 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="J Fragance - Catálogo exclusivo de perfumes de lujo. Descubre nuestra colección premium de fragancias para mujer y hombre.">
     <meta name="theme-color" content="#0a0a0f">
-    
     <title>J Fragance | Perfumes de Lujo</title>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
-    
     <style>
         :root {
-            --color-primary: #d4af37;
-            --color-primary-light: #e8c860;
-            --color-primary-dark: #b8962e;
-            --color-text: #f5f5f5;
-            --color-text-muted: #8a8a8a;
-            --color-bg: #0a0a0f;
-            --color-bg-card: rgba(255, 255, 255, 0.03);
-            --color-border: rgba(255, 255, 255, 0.08);
-            --color-border-hover: rgba(255, 255, 255, 0.15);
-            
+            --gold: #d4af37;
+            --gold-light: #f0d68a;
+            --gold-dark: #a8882a;
+            --text: #f5f5f5;
+            --text-muted: rgba(255,255,255,0.5);
+            --bg: #0a0a0f;
+            --bg-card: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.06);
+            --border-hover: rgba(255,255,255,0.12);
             --font-display: 'Cormorant Garamond', Georgia, serif;
             --font-body: 'Montserrat', Arial, sans-serif;
-            
-            --transition-smooth: 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            --transition-fast: 0.3s ease;
-            --transition-slow: 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            
-            --shadow-card: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-            --shadow-glow: 0 0 60px rgba(212, 175, 55, 0.15);
+            --ease: cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
-
-        *, *::before, *::after {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: var(--font-body);
-            background: var(--color-bg);
-            color: var(--color-text);
+            background: var(--bg);
+            color: var(--text);
             line-height: 1.6;
             overflow-x: hidden;
-            min-height: 100vh;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* ============================================
-           BACKGROUND EFFECTS
-           ============================================ */
-        .bg-layer {
-            position: fixed;
-            inset: 0;
-            z-index: -3;
-            background: var(--color-bg);
+        /* --- BG GIF --- */
+        .bg-gif {
+            position: fixed; inset: 0; z-index: -3;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            pointer-events: none;
+        }
+        .bg-overlay {
+            position: fixed; inset: 0; z-index: -2;
+            background: rgba(10,10,15,0.65);
+            pointer-events: none;
         }
 
-        .bg-gradient {
-            position: fixed;
-            inset: 0;
-            z-index: -2;
-            opacity: 0.6;
-            transition: background var(--transition-slow);
-        }
-
-        .bg-particles {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--color-primary);
-            border-radius: 50%;
-            opacity: 0;
-            animation: float-particle 15s infinite;
-        }
-
-        @keyframes float-particle {
-            0%, 100% { 
-                opacity: 0; 
-                transform: translateY(100vh) scale(0); 
-            }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { 
-                opacity: 0; 
-                transform: translateY(-10vh) scale(1); 
-            }
-        }
-
+        /* --- NOISE OVERLAY --- */
         .noise {
-            position: fixed;
-            inset: 0;
-            z-index: -1;
+            position: fixed; inset: 0; z-index: -1;
             opacity: 0.025;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
             pointer-events: none;
         }
 
-        /* ============================================
-           HEADER
-           ============================================ */
+        /* --- HEADER --- */
         .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            padding: 1.5rem 4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: linear-gradient(180deg, rgba(10,10,15,0.9) 0%, transparent 100%);
-            transition: all var(--transition-fast);
+            position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+            padding: 1.5rem 3rem;
+            display: flex; justify-content: space-between; align-items: center;
+            transition: all 0.4s var(--ease);
         }
-
         .header.scrolled {
-            background: rgba(10,10,15,0.95);
-            backdrop-filter: blur(20px);
-            padding: 1rem 4rem;
-            border-bottom: 1px solid var(--color-border);
+            background: rgba(10,10,15,0.85);
+            backdrop-filter: blur(24px);
+            padding: 1rem 3rem;
+            border-bottom: 1px solid var(--border);
         }
-
         .logo {
             font-family: var(--font-display);
-            font-size: 1.8rem;
-            font-weight: 400;
-            letter-spacing: 0.3em;
-            color: var(--color-text);
+            font-size: 1.6rem; font-weight: 400;
+            letter-spacing: 0.3em; color: var(--text);
             text-decoration: none;
         }
-
-        .logo span {
-            color: var(--color-primary);
-            font-weight: 500;
-        }
-
+        .logo span { color: var(--gold); }
         .nav-list {
-            display: flex;
-            gap: 3rem;
-            list-style: none;
+            display: flex; gap: 2.5rem;
+            list-style: none; align-items: center;
         }
-
         .nav-link {
-            color: var(--color-text-muted);
-            text-decoration: none;
-            font-size: 0.75rem;
-            font-weight: 400;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            position: relative;
-            transition: color var(--transition-fast);
+            color: var(--text-muted); text-decoration: none;
+            font-size: 0.7rem; font-weight: 400;
+            letter-spacing: 0.15em; text-transform: uppercase;
+            position: relative; transition: color 0.3s ease;
+            cursor: pointer; border: none; background: none;
+            font-family: var(--font-body);
         }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 0;
-            width: 0;
-            height: 1px;
-            background: var(--color-primary);
-            transition: width var(--transition-fast);
+        .nav-link:hover { color: var(--text); }
+        .nav-link.active { color: var(--text); }
+        .nav-link.active::after {
+            content: ''; position: absolute;
+            bottom: -4px; left: 0; right: 0; height: 1px;
+            background: var(--gold);
         }
-
-        .nav-link:hover {
-            color: var(--color-text);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
         .nav-link.whatsapp {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--color-primary);
+            display: flex; align-items: center; gap: 0.4rem;
+            color: var(--gold);
         }
+        .nav-link.whatsapp svg { width: 14px; height: 14px; }
 
-        .nav-link.whatsapp svg {
-            width: 16px;
-            height: 16px;
-        }
-
-        /* ============================================
-           HERO / CAROUSEL
-           ============================================ */
+        /* --- HERO --- */
         .hero {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            perspective: 2000px;
-            z-index: 100;
-            transition: opacity 0.8s ease, transform 0.8s ease;
+            position: relative;
+            min-height: 100vh;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            text-align: center;
+            padding: 8rem 2rem 4rem;
+            overflow: hidden;
         }
-
-        .hero.hidden {
+        .hero-bg {
+            position: absolute; inset: 0; z-index: -2;
+            background: radial-gradient(ellipse at 50% 30%, rgba(212,175,55,0.12) 0%, transparent 60%);
+        }
+        .hero-particles {
+            position: absolute; inset: 0; z-index: -1;
+            overflow: hidden;
+        }
+        .particle {
+            position: absolute;
+            width: 2px; height: 2px;
+            background: var(--gold); border-radius: 50%;
             opacity: 0;
-            transform: translateY(-30px);
-            pointer-events: none;
+            animation: float-particle 20s infinite;
+        }
+        @keyframes float-particle {
+            0%, 100% { opacity: 0; transform: translateY(100vh) scale(0); }
+            10% { opacity: 0.5; }
+            90% { opacity: 0.3; }
+            100% { opacity: 0; transform: translateY(-10vh) scale(1); }
         }
 
         .hero-title {
-            position: absolute;
-            top: 3%;
-            text-align: center;
-            z-index: 10;
-            opacity: 0;
-            transform: translateY(-20px);
-            transition: all 0.8s ease;
-            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            opacity: 0; transform: translateY(30px);
+            animation: hero-fade-in 1.2s var(--ease) 0.4s forwards;
         }
-
-        .hero.hidden .hero-title {
-            opacity: 0;
-            transform: translateY(-20px);
+        @keyframes hero-fade-in {
+            to { opacity: 1; transform: translateY(0); }
         }
-
         .hero-title h1 {
             font-family: var(--font-display);
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-size: clamp(3rem, 8vw, 6rem);
             font-weight: 300;
-            letter-spacing: 0.3em;
-            margin-bottom: 0.3rem;
-            background: linear-gradient(135deg, var(--color-text) 0%, var(--color-primary) 100%);
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
-        .hero-title p {
-            font-size: 0.65rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
+        .hero-sub {
+            font-size: 0.7rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-top: 0.5rem;
         }
-
-        .price-banner {
-            position: absolute;
-            left: 3rem;
-            top: 50%;
-            transform: translateY(-50%);
-            text-align: left;
-            z-index: 15;
+        .hero-price {
+            display: flex; align-items: center; gap: 1rem;
+            margin-top: 3rem;
+            opacity: 0; transform: translateY(20px);
+            animation: hero-fade-in 0.8s var(--ease) 1s forwards;
         }
-
-        .price-banner-line {
-            width: 40px;
-            height: 1px;
-            background: var(--color-primary);
-            margin-bottom: 0.75rem;
+        .hero-price-line {
+            width: 40px; height: 1px; background: var(--gold);
         }
-
-        .price-banner-text {
-            font-family: var(--font-body);
-            font-size: 0.6rem;
-            font-weight: 300;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-            margin-bottom: 0.3rem;
+        .hero-price-text {
+            font-size: 0.65rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--text-muted);
         }
-
-        .price-banner-amount {
+        .hero-price-amount {
             font-family: var(--font-display);
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: var(--color-primary);
-            letter-spacing: 0.02em;
+            font-size: 1.8rem; color: var(--gold);
         }
-
-        .price-banner-currency {
+        .hero-price-amount small {
             font-family: var(--font-body);
-            font-size: 0.6rem;
-            font-weight: 300;
-            color: var(--color-text-muted);
+            font-size: 0.6rem; color: var(--text-muted);
             margin-left: 0.3rem;
-            letter-spacing: 0.1em;
         }
 
-        .carousel-wrapper {
-            position: relative;
-            width: 100%;
-            max-width: 1400px;
-            height: 50vh;
-            min-height: 400px;
-            margin-top: 5rem;
-            transform-style: preserve-3d;
-        }
-
-        .carousel {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-        }
-
-        .perfume-card {
-            position: absolute;
-            width: 280px;
-            height: 420px;
-            left: 50%;
-            top: 45%;
-            transform: translate(-50%, -50%) translateX(0) rotateY(0deg);
-            transform-style: preserve-3d;
-            transition: all 0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
+        .scroll-hint {
+            position: absolute; bottom: 2rem;
+            display: flex; flex-direction: column; align-items: center;
+            gap: 0.5rem; color: var(--text-muted);
             opacity: 0;
-            visibility: hidden;
+            animation: hero-fade-in 0.8s var(--ease) 1.5s forwards;
+        }
+        .scroll-hint span {
+            font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase;
+        }
+        .scroll-hint svg {
+            width: 18px; height: 18px;
+            stroke: var(--gold); fill: none;
+            animation: scroll-bounce 2s infinite;
+        }
+        @keyframes scroll-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(6px); }
         }
 
-        .perfume-card.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) translateX(0) rotateY(0deg) scale(1);
-            z-index: 10;
+        /* --- GALLERY --- */
+        .gallery {
+            padding: 6rem 2rem 4rem;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
+        }
+        .gallery-header {
+            text-align: center; margin-bottom: 4rem;
+        }
+        .gallery-header h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 300; letter-spacing: 0.1em;
+            background: linear-gradient(135deg, var(--text) 30%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+        .gallery-header p {
+            font-size: 0.7rem; letter-spacing: 0.2em;
+            text-transform: uppercase; color: var(--text-muted);
         }
 
-        .perfume-card.prev {
-            opacity: 0.5;
-            visibility: visible;
-            transform: translate(-50%, -50%) translateX(-280px) rotateY(25deg) scale(0.85);
-            z-index: 5;
+        .gender-section {
+            max-width: 1400px; margin: 0 auto 5rem;
+        }
+        .gender-section:last-child { margin-bottom: 0; }
+
+        .gender-label {
+            font-family: var(--font-display);
+            font-size: 1.4rem; font-weight: 400;
+            letter-spacing: 0.2em; color: var(--text-muted);
+            margin-bottom: 2rem; text-align: center;
+        }
+        .gender-label span { color: var(--gold); }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
         }
 
-        .perfume-card.next {
-            opacity: 0.5;
-            visibility: visible;
-            transform: translate(-50%, -50%) translateX(280px) rotateY(-25deg) scale(0.85);
-            z-index: 5;
-        }
-
-        .card-inner {
-            width: 100%;
-            height: 100%;
-            background: var(--color-bg-card);
-            backdrop-filter: blur(20px);
-            border: 1px solid var(--color-border);
-            border-radius: 24px;
-            overflow: hidden;
+        .card {
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 0;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.5s var(--ease);
             position: relative;
-            transition: all var(--transition-fast);
-            box-shadow: var(--shadow-card);
+            opacity: 0; transform: translateY(30px);
         }
-
-        .card-inner::before {
+        .card.visible { opacity: 1; transform: translateY(0); }
+        .card:hover { transform: translateY(-8px); }
+        .card-img-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.5s var(--ease);
+        }
+        .card:hover .card-img-wrap {
+            border-color: rgba(212,175,55,0.25);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%);
+        }
+        .card-img-wrap::after {
             content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 24px;
+            position: absolute; inset: 0;
+            border-radius: 16px;
             padding: 1px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(212,175,55,0.1) 100%);
+            background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, transparent 50%, rgba(212,175,55,0.04) 100%);
             -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
             -webkit-mask-composite: xor;
             mask-composite: exclude;
             pointer-events: none;
         }
-
-        .perfume-card:hover .card-inner {
-            border-color: var(--color-border-hover);
-            box-shadow: var(--shadow-card), var(--shadow-glow);
-            transform: translateY(-8px);
-        }
-
-        .card-image {
-            position: relative;
-            width: 100%;
-            height: 60%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .card-image::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(180deg, transparent 50%, rgba(0,0,0,0.3) 100%);
-            pointer-events: none;
-        }
-
-        .card-image img {
-            width: 100%;
-            height: 100%;
+        .card img {
+            max-width: 75%; max-height: 80%;
             object-fit: contain;
-            padding: 1.5rem;
-            transition: transform 0.6s ease;
-            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
+            filter: drop-shadow(0 16px 32px rgba(0,0,0,0.5));
+            transition: transform 0.6s var(--ease);
         }
-
-        .perfume-card:hover .card-image img {
-            transform: scale(1.08) translateY(-5px);
-        }
-
-        /* 3D Sheen Effect */
-        .sheen {
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent 0%,
-                transparent 30%,
-                rgba(255,255,255,0.15) 45%,
-                rgba(255,255,255,0.25) 50%,
-                rgba(255,255,255,0.15) 55%,
-                transparent 70%,
-                transparent 100%
-            );
-            transform: skewX(-20deg);
-            animation: sheen-move 6s infinite;
-            pointer-events: none;
-            z-index: 5;
-        }
-
-        @keyframes sheen-move {
-            0%, 100% { left: -60%; }
-            50% { left: 120%; }
-        }
-
-        .perfume-card:hover .sheen {
-            animation-duration: 3s;
-        }
-
-        .card-content {
-            position: relative;
-            padding: 1.25rem;
-            text-align: center;
-            z-index: 2;
-        }
-
+        .card:hover img { transform: scale(1.12); }
         .card-brand {
-            font-size: 0.65rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--color-primary);
-            margin-bottom: 0.4rem;
+            font-size: 0.55rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--text-muted);
+            margin-bottom: 0.2rem;
+            transition: color 0.3s var(--ease);
         }
-
+        .card:hover .card-brand { color: var(--gold); }
         .card-name {
             font-family: var(--font-display);
-            font-size: 1.6rem;
-            font-weight: 400;
-            margin-bottom: 0.4rem;
-            color: var(--color-text);
+            font-size: 1.1rem; font-weight: 400;
+            color: var(--text);
+            line-height: 1.3;
         }
 
-        /* ============================================
-           CONTROLS & INDICATORS
-           ============================================ */
-        .carousel-controls {
-            position: absolute;
-            bottom: 8%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 2rem;
-            z-index: 50;
-        }
-
-        .control-btn {
-            width: 56px;
-            height: 56px;
-            border: 1px solid var(--color-border);
-            background: rgba(255,255,255,0.03);
-            backdrop-filter: blur(10px);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
-        }
-
-        .control-btn:hover {
-            background: rgba(212, 175, 55, 0.15);
-            border-color: var(--color-primary);
-            transform: scale(1.08);
-        }
-
-        .control-btn svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--color-text);
-            stroke-width: 1.5;
-            fill: none;
-        }
-
-        .indicators {
-            position: absolute;
-            bottom: 4%;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 0.75rem;
-            z-index: 50;
-        }
-
-        .indicator {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.2);
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .indicator.active {
-            background: var(--color-primary);
-            transform: scale(1.3);
-            box-shadow: 0 0 12px var(--color-primary);
-        }
-
-        .indicator:hover:not(.active) {
-            background: rgba(255,255,255,0.4);
-        }
-
-        /* Scroll Indicator */
-        .scroll-hint {
-            position: absolute;
-            bottom: 2rem;
-            right: 3rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-            animation: bounce-hint 2s infinite;
-            z-index: 50;
-        }
-
-        .scroll-hint span {
-            font-size: 0.7rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--color-text-muted);
-        }
-
-        .scroll-hint svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--color-primary);
-            stroke-width: 1.5;
-            fill: none;
-            animation: arrow-bounce 2s infinite;
-        }
-
-        @keyframes arrow-bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(6px); }
-        }
-
-        .hero.hidden .scroll-hint {
-            opacity: 0;
-            animation: none;
-        }
-
-        /* ============================================
-           GALLERY SECTION
-           ============================================ */
-        .gallery {
-            position: relative;
-            min-height: 100vh;
-            padding: 8rem 2rem 4rem;
-            margin-top: 100vh;
-            background: linear-gradient(180deg, rgba(10,10,15,0.97) 0%, rgba(15,15,20,0.98) 100%);
-            border-top: 1px solid var(--color-border);
-        }
-
-        .gender-section {
-            max-width: 1400px;
-            margin: 0 auto 4rem;
-        }
-
-        .gender-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-header::after {
-            content: '';
-            position: absolute;
-            bottom: -1rem;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 60px;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-        }
-
-        .section-title {
-            font-family: var(--font-display);
-            font-size: 2.2rem;
-            font-weight: 400;
-            letter-spacing: 0.2em;
-            color: var(--color-text);
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .gallery-item {
-            background: var(--color-bg-card);
-            border: 1px solid var(--color-border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            text-align: center;
-            transition: all var(--transition-fast);
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .gallery-item::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, transparent 0%, rgba(212,175,55,0.03) 100%);
-            opacity: 0;
-            transition: opacity var(--transition-fast);
-        }
-
-        .gallery-item:hover {
-            background: rgba(255,255,255,0.06);
-            border-color: var(--color-border-hover);
-            transform: translateY(-6px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-        }
-
-        .gallery-item:hover::before {
-            opacity: 1;
-        }
-
-        .gallery-item img {
-            width: 100%;
-            height: 140px;
-            object-fit: contain;
-            margin-bottom: 1rem;
-            filter: drop-shadow(0 8px 16px rgba(0,0,0,0.3));
-            transition: transform var(--transition-fast);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
-
-        .gallery-brand {
-            font-size: 0.6rem;
-            letter-spacing: 0.2em;
-            text-transform: uppercase;
-            color: var(--color-primary);
-            margin-bottom: 0.3rem;
-        }
-
-        .gallery-name {
-            font-family: var(--font-display);
-            font-size: 1.15rem;
-            font-weight: 400;
-            color: var(--color-text);
-            margin-bottom: 0.3rem;
-        }
-
-        /* ============================================
-           FOOTER
-           ============================================ */
+        /* --- FOOTER --- */
         .footer {
-            padding: 3rem 2rem;
-            text-align: center;
-            border-top: 1px solid var(--color-border);
-            background: rgba(5,5,10,0.9);
+            padding: 3rem 2rem; text-align: center;
+            border-top: 1px solid var(--border);
+            background: var(--bg);
         }
-
-        .footer-text {
-            font-size: 0.75rem;
-            color: var(--color-text-muted);
+        .footer p {
+            font-size: 0.7rem; color: var(--text-muted);
             letter-spacing: 0.1em;
         }
 
-        /* ============================================
-           MODAL
-           ============================================ */
+        /* --- MODAL --- */
         .modal-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            background: rgba(5, 5, 10, 0.85);
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.4s ease;
+            position: fixed; inset: 0; z-index: 200;
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem;
+            background: rgba(5,5,10,0.8);
+            backdrop-filter: blur(16px);
+            opacity: 0; visibility: hidden;
+            transition: all 0.4s var(--ease);
         }
-
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
+        .modal-overlay.active { opacity: 1; visibility: visible; }
         .modal {
             position: relative;
-            width: 100%;
-            max-width: 480px;
-            background: linear-gradient(145deg, rgba(30,30,40,0.98) 0%, rgba(20,20,30,0.98) 100%);
-            border: 1px solid var(--color-border);
-            border-radius: 24px;
-            padding: 2.5rem;
-            transform: scale(0.9) translateY(20px);
-            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            box-shadow: 0 30px 60px rgba(0,0,0,0.5), 0 0 80px rgba(212,175,55,0.1);
+            width: 100%; max-width: 440px;
+            background: linear-gradient(145deg, rgba(25,25,35,0.98) 0%, rgba(15,15,20,0.98) 100%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 2rem;
+            transform: scale(0.92) translateY(20px);
+            transition: all 0.4s var(--ease);
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
         }
-
-        .modal-overlay.active .modal {
-            transform: scale(1) translateY(0);
-        }
-
+        .modal-overlay.active .modal { transform: scale(1) translateY(0); }
         .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            width: 40px;
-            height: 40px;
-            border: none;
-            background: rgba(255,255,255,0.05);
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all var(--transition-fast);
+            position: absolute; top: 0.75rem; right: 0.75rem;
+            width: 36px; height: 36px;
+            border: none; background: rgba(255,255,255,0.05);
+            border-radius: 50%; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease;
         }
-
-        .modal-close:hover {
-            background: rgba(255,255,255,0.1);
-            transform: rotate(90deg);
-        }
-
-        .modal-close svg {
-            width: 20px;
-            height: 20px;
-            stroke: var(--color-text-muted);
-            stroke-width: 2;
-        }
-
+        .modal-close:hover { background: rgba(255,255,255,0.1); transform: rotate(90deg); }
+        .modal-close svg { width: 18px; height: 18px; stroke: var(--text-muted); stroke-width: 2; fill: none; }
         .modal-image {
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 100%; height: 180px;
+            display: flex; align-items: center; justify-content: center;
             margin-bottom: 1.5rem;
             background: rgba(255,255,255,0.02);
-            border-radius: 16px;
-            overflow: hidden;
+            border-radius: 12px; overflow: hidden;
         }
-
         .modal-image img {
-            max-width: 80%;
-            max-height: 100%;
+            max-width: 75%; max-height: 100%;
             object-fit: contain;
             filter: drop-shadow(0 10px 30px rgba(0,0,0,0.4));
         }
-
         .modal-brand {
-            font-size: 0.7rem;
-            letter-spacing: 0.25em;
-            text-transform: uppercase;
-            color: var(--color-primary);
-            text-align: center;
-            margin-bottom: 0.5rem;
+            font-size: 0.65rem; letter-spacing: 0.25em;
+            text-transform: uppercase; color: var(--gold);
+            text-align: center; margin-bottom: 0.3rem;
         }
-
         .modal-name {
             font-family: var(--font-display);
-            font-size: 2rem;
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: var(--color-text);
+            font-size: 1.8rem; font-weight: 400;
+            text-align: center; margin-bottom: 1.5rem;
         }
-
         .modal-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.75rem;
-            width: 100%;
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            gap: 0.75rem; width: 100%;
+            padding: 0.9rem 1.5rem;
+            border: none; border-radius: 12px;
             font-family: var(--font-body);
-            font-size: 0.85rem;
-            font-weight: 500;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all var(--transition-fast);
-        }
-
-        .modal-btn.whatsapp {
-            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+            font-size: 0.8rem; font-weight: 500;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            cursor: pointer; text-decoration: none;
+            transition: all 0.3s var(--ease);
+            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
             color: #0a0a0f;
         }
-
-        .modal-btn.whatsapp:hover {
+        .modal-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.3);
+            box-shadow: 0 10px 30px rgba(212,175,55,0.3);
         }
+        .modal-btn svg { width: 18px; height: 18px; }
 
-        .modal-btn svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* ============================================
-           RESPONSIVE
-           ============================================ */
-        @media (max-width: 1024px) {
-            .header {
-                padding: 1.25rem 2rem;
-            }
-            
-            .nav-list {
-                gap: 2rem;
-            }
-            
-            .carousel-wrapper {
-                max-width: 900px;
-                margin-top: 4rem;
-            }
-            
-            .hero-title {
-                top: 2%;
-            }
-            
-            .perfume-card {
-                width: 240px;
-                height: 360px;
-                top: 42%;
-            }
-            
-            .perfume-card.prev {
-                transform: translate(-50%, -50%) translateX(-180px) rotateY(25deg) scale(0.75);
-            }
-            
-            .perfume-card.next {
-                transform: translate(-50%, -50%) translateX(180px) rotateY(-25deg) scale(0.75);
-            }
-        }
-
+        /* --- RESPONSIVE --- */
         @media (max-width: 768px) {
-            .header {
-                padding: 1rem 1.5rem;
-            }
-            
-            .nav-list {
-                gap: 1.5rem;
-            }
-            
-            .nav-link {
-                font-size: 0.65rem;
-            }
-            
-            .hero-title h1 {
-                font-size: 1.8rem;
-                letter-spacing: 0.15em;
-            }
-            
-            .hero-title {
-                top: 2%;
-            }
-            
-            .carousel-wrapper {
-                height: 40vh;
-                margin-top: 3rem;
-            }
-            
-            .perfume-card {
-                width: 200px;
-                height: 300px;
-                top: 40%;
-            }
-            
-            .perfume-card.prev {
-                transform: translate(-50%, -50%) translateX(-120px) rotateY(20deg) scale(0.7);
-            }
-            
-            .perfume-card.next {
-                transform: translate(-50%, -50%) translateX(120px) rotateY(-20deg) scale(0.7);
-            }
-            
-            .gallery-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-            
-            .gallery-item {
-                padding: 1rem;
-            }
-            
-            .scroll-hint {
-                right: 1.5rem;
-            }
-
-            .price-banner {
-                position: absolute;
-                left: 50%;
-                top: 12%;
-                transform: translateX(-50%);
-                text-align: center;
-                z-index: 15;
-            }
-
-            .price-banner-line {
-                margin: 0 auto 0.75rem;
-            }
-
-            .price-banner-amount {
-                font-size: 1.3rem;
-            }
+            .header { padding: 1rem 1.5rem; }
+            .header.scrolled { padding: 0.8rem 1.5rem; }
+            .nav-list { gap: 1.25rem; }
+            .nav-link { font-size: 0.6rem; }
+            .grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+            .gallery-header h2 { font-size: 1.8rem; }
+            .hero-title h1 { letter-spacing: 0.08em; }
         }
-
         @media (max-width: 480px) {
-            .logo {
-                font-size: 1.4rem;
-                letter-spacing: 0.2em;
-            }
-            
-            .nav-list {
-                gap: 1rem;
-            }
-            
-            .control-btn {
-                width: 48px;
-                height: 48px;
-            }
-            
-            .gallery-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 0.75rem;
-            }
-
-            .modal {
-                max-width: 95%;
-                padding: 1.5rem;
-            }
-
-            .modal-name {
-                font-size: 1.6rem;
-            }
+            .logo { font-size: 1.3rem; }
+            .grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+            .modal { padding: 1.5rem; }
+            .modal-name { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
-    <div class="bg-layer"></div>
-    <div class="bg-gradient" id="bgGradient"></div>
-    <div class="bg-particles" id="particles"></div>
+    <img class="bg-gif" src="vid/fondo.gif" alt="" aria-hidden="true">
+    <div class="bg-overlay"></div>
     <div class="noise"></div>
 
     <header class="header" id="header">
         <a href="#" class="logo">J<span>F</span></a>
         <nav>
             <ul class="nav-list">
+                <li><button class="nav-link" onclick="filtrarCategoria('mujer')">Mujer</button></li>
+                <li><button class="nav-link" onclick="filtrarCategoria('hombre')">Hombre</button></li>
                 <li><a href="https://api.whatsapp.com/send?phone=573194284340" class="nav-link whatsapp" target="_blank" rel="noopener">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                     Contacto
@@ -1003,34 +427,20 @@
         </nav>
     </header>
 
-    <section class="hero" id="hero">
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-particles" id="particles"></div>
         <div class="hero-title">
             <h1>J FRAGANCE</h1>
+            <p class="hero-sub">Perfumes de lujo para hombre y mujer</p>
         </div>
-
-        <div class="price-banner">
-            <div class="price-banner-line"></div>
-            <p class="price-banner-text">Cualquier loción</p>
-            <p class="price-banner-amount">$115.000<span class="price-banner-currency">COP</span></p>
+        <div class="hero-price">
+            <div class="hero-price-line"></div>
+            <span class="hero-price-text">Cualquier loción</span>
+            <span class="hero-price-amount">$115.000<small>COP</small></span>
         </div>
-
-        <div class="carousel-wrapper">
-            <div class="carousel" id="carousel"></div>
-        </div>
-
-        <div class="carousel-controls">
-            <button class="control-btn" id="prevBtn" aria-label="Anterior">
-                <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-            </button>
-            <button class="control-btn" id="nextBtn" aria-label="Siguiente">
-                <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-            </button>
-        </div>
-
-        <div class="indicators" id="indicators"></div>
-        
         <div class="scroll-hint">
-            <span>Desliza</span>
+            <span>Descubre</span>
             <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 5v14M19 12l-7 7-7-7"/>
             </svg>
@@ -1038,32 +448,31 @@
     </section>
 
     <section class="gallery" id="coleccion">
-        <div class="gender-section">
-            <div class="section-header">
-                <h2 class="section-title">MUJER</h2>
-            </div>
-            <div class="gallery-grid" id="galleryMujer"></div>
+        <div class="gallery-header">
+            <h2>Nuestra Colección</h2>
+            <p>Selección premium de fragancias</p>
         </div>
-        
-        <div class="gender-section">
-            <div class="section-header">
-                <h2 class="section-title">HOMBRE</h2>
-            </div>
-            <div class="gallery-grid" id="galleryHombre"></div>
+
+        <div class="gender-section" data-genero="mujer">
+            <p class="gender-label"><span>—</span> Mujer <span>—</span></p>
+            <div class="grid" id="galleryMujer"></div>
+        </div>
+
+        <div class="gender-section" data-genero="hombre">
+            <p class="gender-label"><span>—</span> Hombre <span>—</span></p>
+            <div class="grid" id="galleryHombre"></div>
         </div>
     </section>
 
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" id="modalClose" aria-label="Cerrar">
-                <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor"/></svg>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12"/></svg>
             </button>
-            <div class="modal-image">
-                <img src="" alt="" id="modalImage">
-            </div>
+            <div class="modal-image"><img src="" alt="" id="modalImage"></div>
             <p class="modal-brand" id="modalBrand"></p>
             <h2 class="modal-name" id="modalName"></h2>
-            <a href="#" class="modal-btn whatsapp" id="modalWhatsapp" target="_blank" rel="noopener">
+            <a href="#" class="modal-btn" id="modalWhatsapp" target="_blank" rel="noopener">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
                 Comprar por WhatsApp
             </a>
@@ -1071,15 +480,11 @@
     </div>
 
     <footer class="footer">
-        <p class="footer-text">&copy; 2024 J Fragance. Todos los derechos reservados.</p>
+        <p>&copy; 2025 J Fragance. Todos los derechos reservados.</p>
     </footer>
 
     <script>
-        // ============================================
-        // HELPERS
-        // ============================================
         const imageNameMap = {
-            // MUJER
             'COCO MADEMOISELLE|CHANEL': 'MADEIMOISELLE_CHANEL-removebg-preview.png',
             'SCANDAL|JEAN PAUL GAULTIER': { hombre: 'SCANDAL_JEAN_PAUL_GAULTIER-removebg-preview.png', mujer: 'SACANDAL_JEAN_PAUL_GAULTIER-removebg-preview.png' },
             '212 VIP ROSÉ|CAROLINA HERRERA': '212_VIP_ROSÉ_CAROLINA_HERRERA-removebg-preview.png',
@@ -1094,12 +499,9 @@
             'OMNIA CORAL|BVLGARI': 'OMNIA_CORAL_BVLGARI-removebg-preview.png',
             'OMNIA AMETHYSTE|BVLGARI': 'OMNIA_AMETHYSTE_BVLGARI-removebg-preview.png',
             'OMNIA CRYSTALLINE|BVLGARI': 'OMNIA_CRYSTALLINE_BVLGARI-removebg-preview.png',
-            // HOMBRE
             'EROS FLAME|VERSACE': 'EROS_FLAME_VERSCE-removebg-preview.png',
             'SILVER MOUNTAIN WATER|CREED': 'SILVER_MPUNTAIN_WATER_CREED-removebg-preview.png',
             'HAPPY FOR MEN|CLINIQUE': 'FOR_MEN_CLINIQUE_HAPPY-removebg-preview.png',
-            'L\'EAU D\'ISSEY|ISSEY MIYAKE': { hombre: 'ISSEY_MIYAKE_LEAU_DISSEY-removebg-preview.png', mujer: 'ISSEY_MIYAKE_L_EAU_D_ISSEY-removebg-preview.png' },
-            'LIGHT BLUE|DOLCE & GABBANA': { hombre: 'LIGHT_BLUE_DOLCE___GABANNA-removebg-preview.png', mujer: 'LIGHT_BLUE_DOLCE_GABBANA-removebg-preview.png' },
             'NOIR|LACOSTE': 'NOIR_LACOSTE-removebg-preview-removebg-preview.png',
             'ONLY THE BRAVE TATTOO|DIESEL': 'ONLY_THE_BRAVE_TATTO_DIESEL-removebg-preview.png',
             'THE ONE|DOLCE & GABBANA': 'THE_ONE_DOLCE___GABANNA-removebg-preview.png',
@@ -1119,54 +521,25 @@
 
         function getPerfumeImage(name, brand, gender) {
             const folder = gender === 'mujer' ? 'mujer' : 'hombre';
-            
-            // Check for special mappings first - exact match on full key
             const fullKey = `${name}|${brand}`;
             if (imageNameMap[fullKey]) {
                 const value = imageNameMap[fullKey];
-                if (typeof value === 'object') {
-                    return `images/${folder}/${value[gender] || value.hombre}`;
-                }
+                if (typeof value === 'object') return `images/${folder}/${value[gender] || value.hombre}`;
                 return `images/${folder}/${value}`;
             }
-            
-            // Fallback: check partial matches
             for (const [key, value] of Object.entries(imageNameMap)) {
                 const names = key.split('|');
                 if (name.includes(names[0]) && brand.includes(names[1])) {
-                    if (typeof value === 'object') {
-                        return `images/${folder}/${value[gender] || value.hombre}`;
-                    }
+                    if (typeof value === 'object') return `images/${folder}/${value[gender] || value.hombre}`;
                     return `images/${folder}/${value}`;
                 }
             }
-            
-            // Default: generate from name and brand
-            const nameFormatted = name.toUpperCase()
-                .replace(/'/g, '')
-                .replace(/°/g, '')
-                .replace(/\s+/g, '_')
-                .replace(/[^A-Z0-9_]/g, '');
-            const brandFormatted = brand.toUpperCase()
-                .replace(/&/g, '')
-                .replace(/\s+/g, '_')
-                .replace(/[^A-Z0-9_]/g, '');
+            const nameFormatted = name.toUpperCase().replace(/'/g,'').replace(/°/g,'').replace(/\s+/g,'_').replace(/[^A-Z0-9_]/g,'');
+            const brandFormatted = brand.toUpperCase().replace(/&/g,'').replace(/\s+/g,'_').replace(/[^A-Z0-9_]/g,'');
             return `images/${folder}/${nameFormatted}_${brandFormatted}-removebg-preview.png`;
         }
 
-        // ============================================
-        // DATA
-        // ============================================
-        const carouselPerfumes = [
-            { brand: "CHANEL", name: "BLEU DE CHANEL", gradient: "linear-gradient(135deg, #0a1525 0%, #1a2a3a 50%, #0d1a2a 100%)" },
-            { brand: "PACO RABANNE", name: "1 MILLION", gradient: "linear-gradient(135deg, #1a0a0a 0%, #2a1a1a 50%, #1a0a0a 100%)" },
-            { brand: "DIOR", name: "SAUVAGE", gradient: "linear-gradient(135deg, #0a1a2a 0%, #1a2a3a 50%, #0a1520 100%)" },
-            { brand: "CREED", name: "AVENTUS", gradient: "linear-gradient(135deg, #1a1a0a 0%, #2a2a1a 50%, #1a1a0a 100%)" },
-            { brand: "VERSACE", name: "EROS", gradient: "linear-gradient(135deg, #0a2a1a 0%, #1a3a2a 50%, #0a2a1a 100%)" }
-        ];
-
         const allPerfumes = [
-            // MUJER
             { brand: "CAROLINA HERRERA", name: "212 NYC", gender: "mujer" },
             { brand: "CAROLINA HERRERA", name: "212 VIP", gender: "mujer" },
             { brand: "CAROLINA HERRERA", name: "212 VIP ROSÉ", gender: "mujer" },
@@ -1207,7 +580,6 @@
             { brand: "PARFUMS DE MARLY", name: "DELINA EXCLUSIF", gender: "mujer" },
             { brand: "PACO RABANNE", name: "PURE XS", gender: "mujer" },
             { brand: "ARIANA GRANDE", name: "SWEET LIKE CANDY", gender: "mujer" },
-            // HOMBRE
             { brand: "CHANEL", name: "ALLURE", gender: "hombre" },
             { brand: "CHANEL", name: "BLEU DE CHANEL", gender: "hombre" },
             { brand: "MOSCHINO", name: "TOY BOY 2", gender: "hombre" },
@@ -1271,173 +643,41 @@
             { brand: "GILLES CANTUEL", name: "ARSENAL", gender: "hombre" }
         ];
 
-        // ============================================
-        // DOM ELEMENTS
-        // ============================================
-        const carousel = document.getElementById('carousel');
-        const indicatorsContainer = document.getElementById('indicators');
-        const bgGradient = document.getElementById('bgGradient');
-        const hero = document.getElementById('hero');
-        const header = document.getElementById('header');
         const particles = document.getElementById('particles');
-
-        let currentIndex = 0;
-
-        // ============================================
-        // PARTICLES
-        // ============================================
-        function createParticles() {
-            for (let i = 0; i < 30; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = `${Math.random() * 100}%`;
-                particle.style.animationDelay = `${Math.random() * 15}s`;
-                particle.style.animationDuration = `${12 + Math.random() * 8}s`;
-                particles.appendChild(particle);
-            }
+        for (let i = 0; i < 25; i++) {
+            const p = document.createElement('div');
+            p.className = 'particle';
+            p.style.left = `${Math.random() * 100}%`;
+            p.style.animationDelay = `${Math.random() * 20}s`;
+            p.style.animationDuration = `${15 + Math.random() * 10}s`;
+            particles.appendChild(p);
         }
-        createParticles();
 
-        // ============================================
-        // CAROUSEL FUNCTIONS
-        // ============================================
-        function createPerfumeCard(perfume, index) {
-            const card = document.createElement('article');
-            card.className = 'perfume-card';
-            card.setAttribute('role', 'group');
-            card.setAttribute('aria-label', `${perfume.name} de ${perfume.brand}`);
-            card.dataset.index = index;
+        const svgFallback = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg"><rect x="55" y="15" width="90" height="60" rx="8" fill="#d4af37"/><rect x="70" y="70" width="60" height="12" rx="3" fill="#d4af37"/><path d="M45 82 L155 82 L150 265 Q150 285 130 285 L70 285 Q50 285 50 265 Z" fill="rgba(255,255,255,0.15)"/></svg>`;
 
-            const svgFallback = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
-                <defs>
-                    <linearGradient id="bottleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" style="stop-color:rgba(255,255,255,0.3)"/>
-                        <stop offset="50%" style="stop-color:rgba(255,255,255,0.1)"/>
-                        <stop offset="100%" style="stop-color:rgba(255,255,255,0.2)"/>
-                    </linearGradient>
-                </defs>
-                <rect x="55" y="15" width="90" height="60" rx="8" fill="#d4af37"/>
-                <rect x="70" y="70" width="60" height="12" rx="3" fill="#d4af37"/>
-                <path d="M45 82 L155 82 L150 265 Q150 285 130 285 L70 285 Q50 285 50 265 Z" fill="url(#bottleGrad)"/>
-            </svg>`;
-
-            const imagePath = getPerfumeImage(perfume.name, perfume.brand, 'hombre');
-
-            card.innerHTML = `
-                <div class="card-inner">
-                    <div class="sheen"></div>
-                    <div class="card-image">
-                        <img src="${imagePath}" alt="${perfume.name}" 
-                             loading="lazy"
-                             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                        <div style="display:none;">${svgFallback}</div>
-                    </div>
-                    <div class="card-content">
+        function createGallery() {
+            ['galleryMujer', 'galleryHombre'].forEach(id => {
+                const container = document.getElementById(id);
+                const gender = id === 'galleryMujer' ? 'mujer' : 'hombre';
+                allPerfumes.filter(p => p.gender === gender).forEach(perfume => {
+                    const card = document.createElement('article');
+                    card.className = 'card';
+                    card.dataset.perfume = JSON.stringify(perfume);
+                    const imgPath = getPerfumeImage(perfume.name, perfume.brand, perfume.gender);
+                    card.innerHTML = `
+                        <div class="card-img-wrap">
+                            <img src="${imgPath}" alt="${perfume.name}" loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                            <div style="display:none;">${svgFallback}</div>
+                        </div>
                         <p class="card-brand">${perfume.brand}</p>
                         <h3 class="card-name">${perfume.name}</h3>
-                    </div>
-                </div>
-            `;
-
-            card.addEventListener('click', () => {
-                if (card.classList.contains('active')) {
-                    openModal(perfume);
-                } else {
-                    navigate(index < currentIndex ? -1 : 1);
-                }
-            });
-
-            return card;
-        }
-
-        function createIndicators() {
-            carouselPerfumes.forEach((_, index) => {
-                const indicator = document.createElement('button');
-                indicator.className = 'indicator' + (index === 0 ? ' active' : '');
-                indicator.setAttribute('aria-label', `Ir a perfume ${index + 1}`);
-                indicator.addEventListener('click', () => {
-                    const diff = index - currentIndex;
-                    if (diff !== 0) navigate(diff);
+                    `;
+                    card.addEventListener('click', () => openModal(perfume));
+                    container.appendChild(card);
                 });
-                indicatorsContainer.appendChild(indicator);
             });
         }
 
-        function updateCarousel() {
-            const cards = carousel.querySelectorAll('.perfume-card');
-            
-            cards.forEach((card, index) => {
-                card.classList.remove('active', 'prev', 'next');
-                
-                const diff = (index - currentIndex + carouselPerfumes.length) % carouselPerfumes.length;
-                
-                if (diff === 0) {
-                    card.classList.add('active');
-                } else if (diff === 1) {
-                    card.classList.add('next');
-                } else if (diff === carouselPerfumes.length - 1) {
-                    card.classList.add('prev');
-                }
-            });
-
-            // Update indicators
-            const indicators = indicatorsContainer.querySelectorAll('.indicator');
-            indicators.forEach((ind, index) => {
-                ind.classList.toggle('active', index === currentIndex);
-                ind.setAttribute('aria-current', index === currentIndex ? 'true' : 'false');
-            });
-
-            // Update background
-            bgGradient.style.background = carouselPerfumes[currentIndex].gradient;
-        }
-
-        function navigate(direction) {
-            currentIndex = (currentIndex + direction + carouselPerfumes.length) % carouselPerfumes.length;
-            updateCarousel();
-        }
-
-        // ============================================
-        // GALLERY
-        // ============================================
-        function createGallery() {
-            const galleryMujer = document.getElementById('galleryMujer');
-            const galleryHombre = document.getElementById('galleryHombre');
-            
-            const svgFallback = `<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg">
-                <rect x="55" y="15" width="90" height="60" rx="8" fill="#d4af37"/>
-                <rect x="70" y="70" width="60" height="12" rx="3" fill="#d4af37"/>
-                <path d="M45 82 L155 82 L150 265 Q150 285 130 285 L70 285 Q50 285 50 265 Z" fill="rgba(255,255,255,0.15)"/>
-            </svg>`;
-            
-            allPerfumes.forEach((perfume) => {
-                const item = document.createElement('article');
-                item.className = 'gallery-item';
-                item.dataset.perfume = JSON.stringify(perfume);
-                
-                const imagePath = getPerfumeImage(perfume.name, perfume.brand, perfume.gender);
-                
-                item.innerHTML = `
-                    <img src="${imagePath}" alt="${perfume.name}" 
-                         loading="lazy"
-                         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                    <div style="display:none;">${svgFallback}</div>
-                    <p class="gallery-brand">${perfume.brand}</p>
-                    <h3 class="gallery-name">${perfume.name}</h3>
-                `;
-
-                item.addEventListener('click', () => openModal(perfume));
-                
-                if (perfume.gender === 'mujer') {
-                    galleryMujer.appendChild(item);
-                } else {
-                    galleryHombre.appendChild(item);
-                }
-            });
-        }
-
-        // ============================================
-        // MODAL
-        // ============================================
         const modalOverlay = document.getElementById('modalOverlay');
         const modalImage = document.getElementById('modalImage');
         const modalBrand = document.getElementById('modalBrand');
@@ -1446,112 +686,54 @@
         const modalClose = document.getElementById('modalClose');
 
         function openModal(perfume) {
-            const imagePath = getPerfumeImage(perfume.name, perfume.brand, perfume.gender);
-            modalImage.src = imagePath;
+            modalImage.src = getPerfumeImage(perfume.name, perfume.brand, perfume.gender);
             modalImage.alt = perfume.name;
             modalBrand.textContent = perfume.brand;
             modalName.textContent = perfume.name;
-            
-            const message = encodeURIComponent(`Hola! Me interesa el perfume ${perfume.name} - ${perfume.brand}`);
-            modalWhatsapp.href = `https://api.whatsapp.com/send?phone=573194284340&text=${message}`;
-            
+            const msg = encodeURIComponent(`Hola! Me interesa el perfume ${perfume.name} - ${perfume.brand}`);
+            modalWhatsapp.href = `https://api.whatsapp.com/send?phone=573194284340&text=${msg}`;
             modalOverlay.classList.add('active');
             document.body.style.overflow = 'hidden';
         }
-
         function closeModal() {
             modalOverlay.classList.remove('active');
             document.body.style.overflow = '';
         }
-
         modalClose.addEventListener('click', closeModal);
-        modalOverlay.addEventListener('click', (e) => {
-            if (e.target === modalOverlay) closeModal();
-        });
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modalOverlay.classList.contains('active')) {
-                closeModal();
-            }
-        });
+        modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+        document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
 
-        // ============================================
-        // SCROLL EFFECTS
-        // ============================================
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', () => {
-            const currentScrollY = window.scrollY;
-            
-            // Hero hide/show
-            if (currentScrollY > 100) {
-                hero.classList.add('hidden');
-            } else {
-                hero.classList.remove('hidden');
-            }
-
-            // Header effect
-            if (currentScrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-            
-            lastScrollY = currentScrollY;
-        });
-
-        // ============================================
-        // INITIALIZATION
-        // ============================================
-        function init() {
-            // Carousel
-            carouselPerfumes.forEach((perfume, index) => {
-                carousel.appendChild(createPerfumeCard(perfume, index));
+        function filtrarCategoria(genero) {
+            document.querySelectorAll('.gender-section').forEach(s => {
+                s.style.display = s.dataset.genero === genero ? 'block' : 'none';
             });
-
-            createIndicators();
-            updateCarousel();
-
-            // Initial background
-            bgGradient.style.background = carouselPerfumes[0].gradient;
-
-            // Gallery
-            createGallery();
-
-            // Show hero title
-            setTimeout(() => {
-                document.querySelector('.hero-title').style.opacity = '1';
-                document.querySelector('.hero-title').style.transform = 'translateY(0)';
-            }, 300);
+            document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(b => {
+                if (b.textContent.toLowerCase().trim() === genero) b.classList.add('active');
+            });
+            document.getElementById('coleccion').scrollIntoView({ behavior: 'smooth' });
         }
 
-        // Event listeners
-        document.getElementById('prevBtn').addEventListener('click', () => navigate(-1));
-        document.getElementById('nextBtn').addEventListener('click', () => navigate(1));
+        // Scroll animations (Intersection Observer)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        // Touch/swipe support
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        }, { passive: true });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            const diff = touchStartX - touchEndX;
-            if (Math.abs(diff) > 50) {
-                navigate(diff > 0 ? 1 : -1);
-            }
-        }, { passive: true });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') navigate(-1);
-            if (e.key === 'ArrowRight') navigate(1);
+        // Header scroll
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
         });
 
-        // Run
-        init();
+        // Init
+        createGallery();
+        setTimeout(() => {
+            document.querySelectorAll('.card').forEach(card => observer.observe(card));
+        }, 100);
     </script>
 </body>
 </html>
